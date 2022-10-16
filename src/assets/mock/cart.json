@@ -1,0 +1,46 @@
+{
+  "code":0,
+  "data":[
+    {
+      "productId":"001",
+      "productName":"小米移动电源3 10000mAh快充版 银色",
+      "productPrice":67,
+      "productCount":3,
+      "productImage":"1.jpg",
+      "checked":false
+    },
+    {
+      "productId":"002",
+      "productName":"小米真无线蓝牙耳机Air2 SE 白色",
+      "productPrice":129,
+      "productCount":2,
+      "productImage":"2.jpg",
+      "checked":false
+    },
+    {
+      "productId":"003",
+      "productName":"米家电磁炉青春版 白色",
+      "productPrice":179,
+      "productCount":3,
+      "productImage":"3.jpg",
+      "checked":false
+    },
+    {
+      "productId":"004",
+      "productName":"米家石墨烯踢脚线电暖器 白色",
+      "productPrice":699,
+      "productCount":1,
+      "productImage":"4.jpg",
+      "checked":false
+    },
+    {
+      "productId":"005",
+      "productName":"小米手环6 黑色",
+      "productPrice":219,
+      "productCount":1,
+      "productImage":"5.jpg",
+      "checked":false
+    }
+  ],
+  "message":""
+}
