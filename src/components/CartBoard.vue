@@ -10,35 +10,35 @@
         <li>小计</li>
         <li>操作</li>
       </ul>
-      <div class="cart-item">
+      <div class="cart-item" v-for="(item,index) in cartData" :key="index">
         <div class="cart-item-select">
-          <input type="checkbox" id='checkbox1'>
+          <input type="checkbox" id='checkbox1' v-model="item.checked">
           <label for="checkbox1"></label>
         </div>
         <div class="cart-item-name">
-          <span>小米移动电源3</span>
+          <span>{{item.productName}}</span>
         </div>
         <div class="cart-item-img">
-          <img src="@/assets/images/1.jpg" alt="">
+          <img :src="'/images/' + item.productImage" alt="">
         </div>
         <div class="cart-item-price">
-          24
+          {{currency(item.productPrice)}}
         </div>
         <div class="cart-item-count">
           <div class="count-area">
-            <a class="lk-count" href="javascript:;">-</a>
-            <span class="middle-text">33</span>
-            <a class="lk-count" href="javascript:;">+</a>
+            <a class="lk-count" href="javascript:;" @click="editCart('minus',index)">-</a>
+            <span class="middle-text">{{item.productCount}}</span>
+            <a class="lk-count" href="javascript:;" @click="editCart('plus',index)">+</a>
           </div>
 
         </div>
-        <div class="cart-item-total">22</div>
-        <div class="cart-item-remove">222</div>
+        <div class="cart-item-total">{{currency(22)}}</div>
+        <div class="cart-item-remove"> <a href="javascript:;" @click="delItem(item)">删除</a></div>
       </div>
       <div class="cart-board-footer">
         <div class="total-price">
           <span class="price-text">
-            总价： <span class="price-num">123</span>
+            总价： <span class="price-num">{{totalPrice}}</span>
           </span>
           <button class="total-btn">结算</button>
         </div>
@@ -48,6 +48,95 @@
 </template>
 
 <script setup lang="ts">
+import { computed, reactive, ref } from 'vue';
+import axios from 'axios'
+
+/**
+ *
+ */
+interface CartData {
+  checked: boolean;
+  productCount: number;
+  productId: string;
+  productImage: string;
+  productName: string;
+  productPrice: number;
+}
+let cartData = ref<CartData[]>([])
+/**
+ *获取购物车数据
+ */
+const getCartDta = () => {
+  axios.get("/mock/cart.json").then((response) => {
+    const res = response.data;
+    const data = res.data;
+    cartData.value = data;
+    // console.log("🚀 ~ file: Header.vue ~ line 40 ~ axios.get ~ cartData", cartData)
+
+  })
+}
+getCartDta()
+/**
+ *
+ * @param value
+ */
+function currency(value: number) {
+  if (!value) {
+    return "0.00";
+  }
+
+  value = value * 1;
+
+  //保留2位
+  return "￥" + value.toFixed(2);
+}
+/**
+ *
+ * @param {string} option
+ * @param {number} index
+ */
+function editCart(option: string, index: number) {
+  switch (option) {
+    case 'minus':
+      {
+        if (cartData.value[index].productCount <= 0) { return } else { cartData.value[index].productCount--; }
+      }
+      // cartData.value[index].productCount < 0 ?:return: cartData.value[index].productCount--;
+      break;
+    case 'plus':
+      cartData.value[index].productCount++;
+      break;
+  }
+}
+/**
+ *
+ * @param item
+ */
+function delItem(item: CartData) {
+  cartData.value.forEach((ele, index) => {
+    if (ele.productId === item.productId) {
+      cartData.value.splice(index, 1)
+    }
+  });
+}
+/**
+ *
+ */
+// const totalPrice = computed<number>(
+
+//   let tPrice:number = 0;
+
+// cartData.value.forEach((element, idx) => {
+
+//   if (element.checked) {
+
+//     tPrice += element.productPrice * element.productCount;
+//   }
+// });
+// return tPrice;
+
+// )
+// console.log("🚀 ~ file: CartBoard.vue ~ line 139 ~ totalPrice", totalPrice)
 
 </script>
 
@@ -66,7 +155,7 @@ $item-total-width: 1226px;
       background-color: #ddd;
 
       li {
-        flex: 1;
+        width: $item-total-width/7;
         line-height: 3rem;
         text-align: center;
         border-left: 1px solid #fff;
@@ -89,7 +178,7 @@ $item-total-width: 1226px;
         position: relative;
         /* width: 175px;
         height: 100%; */
-        flex: 1;
+        width: $item-total-width/7;
 
         input[type='checkbox'] {
           position: absolute;
@@ -105,15 +194,23 @@ $item-total-width: 1226px;
       .cart-item-name {
         /* width: 175px;
         height: 100%; */
-        flex: 1;
+        width: $item-total-width/7;
+        height: 160px;
+        /* width: 150px; */
         text-align: center;
         border-left: 1px solid #ddd;
+
+        span {
+          white-space: nowrap;
+        }
       }
 
       .cart-item-img {
-        flex: 1;
+        width: $item-total-width/7;
         height: 160px;
+        box-sizing: border-box;
         border-left: 1px solid #ddd;
+        padding: 5px;
 
         img {
           height: 100%;
@@ -123,18 +220,18 @@ $item-total-width: 1226px;
       }
 
       .cart-item-price {
-        flex: 1;
+        width: $item-total-width/7;
+
         border-left: 1px solid #ddd;
         text-align: center;
       }
 
       .cart-item-count {
-        flex: 1;
+        width: $item-total-width/7;
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100%;
-
         border-left: 1px solid #ddd;
 
         /* text-align: center; */
@@ -169,7 +266,6 @@ $item-total-width: 1226px;
             &:nth-child(3) {
               border-left: 1px solid #ddd;
             }
-
           }
 
         }

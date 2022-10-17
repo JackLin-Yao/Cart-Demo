@@ -1,0 +1,45 @@
+{
+  "code":0,
+  "data":[
+    {
+      "addressId":"001",
+      "userName":"小红",
+      "streetName":"北京市东城区",
+      "postCode":"100001",
+      "tel":18655555555,
+      "isDefault": true
+    },
+    {
+      "addressId":"002",
+      "userName":"小明",
+      "streetName":"天津市南开区",
+      "postCode":"100002",
+      "tel":18666666666,
+      "isDefault": false
+    },
+    {
+      "addressId":"003",
+      "userName":"小妹",
+      "streetName":"北京市朝阳区",
+      "postCode":"100003",
+      "tel":18677777777,
+      "isDefault": false
+    },
+    {
+      "addressId":"004",
+      "userName":"小黑",
+      "streetName":"广州市海珠区",
+      "postCode":"100004",
+      "tel":18688888888,
+      "isDefault": false
+    },
+    {
+      "addressId":"005",
+      "userName":"小德",
+      "streetName":"佛山市高明区",
+      "postCode":"100005",
+      "tel":18699999999,
+      "isDefault": false
+    }
+  ]
+}
