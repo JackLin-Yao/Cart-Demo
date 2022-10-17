@@ -32,7 +32,7 @@
           </div>
 
         </div>
-        <div class="cart-item-total">{{currency(22)}}</div>
+        <div class="cart-item-total">{{currency(item.productPrice * item.productCount)}}</div>
         <div class="cart-item-remove"> <a href="javascript:;" @click="delItem(item)">删除</a></div>
       </div>
       <div class="cart-board-footer">
@@ -120,24 +120,36 @@ function delItem(item: CartData) {
   });
 }
 /**
- *
+ *Calculate the total number of shopping carts
  */
-// const totalPrice = computed<number>(
+const totalPrice = computed(() => {
+  let tPrice = 0;
+  // console.log("🚀 ~ file: CartBoard.vue ~ line 127 ~ totalPrice ~ tPrice", tPrice)
+  cartData.value.forEach((ele) => {
+    if (ele.checked) {
+      tPrice += ele.productPrice * ele.productCount;
+    }
+  }
+  )
+  // console.log("🚀 ~ file: CartBoard.vue ~ line 127 ~ totalPrice ~ tPrice", tPrice)
+  return tPrice
+})
 
-//   let tPrice:number = 0;
+  // let tPrice = 0;
+  // console.log("🚀 ~ file: CartBoard.vue ~ line 137 ~ tPrice", tPrice)
+  // let num = [1,2,3,4,5,6,7,8,9,33,3,4]
+  // num.forEach((ele) => {
+  //   if (ele) {
+  //     tPrice += ele;
+  //   }
+  // }
+  // )
 
-// cartData.value.forEach((element, idx) => {
+  // console.log("🚀 ~ file: CartBoard.vue ~ line 137 ~ tPrice", tPrice)
 
-//   if (element.checked) {
+// console.log("🚀 ~ file: CartBoard.vue ~ line 146 ~ name ~ name", name)
 
-//     tPrice += element.productPrice * element.productCount;
-//   }
-// });
-// return tPrice;
-
-// )
-// console.log("🚀 ~ file: CartBoard.vue ~ line 139 ~ totalPrice", totalPrice)
-
+// console.log("🚀 ~ file: CartBoard.vue ~ line 134 ~ totalPrice ~ totalPrice", totalPrice)
 </script>
 
 <style lang="scss" scoped>
